@@ -1,5 +1,6 @@
 ﻿  CoreModule.cpp
-G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(97,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(97,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(59,35): warning C4390: ';': empty controlled statement found; is this the intent?
+G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(67,25): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(86,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(86,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+G:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(53,35): warning C4390: ';': empty controlled statement found; is this the intent?
   CoreModule.vcxproj -> G:\GitFork\CoreModule\CoreModule\x64\Debug\CoreModule.exe

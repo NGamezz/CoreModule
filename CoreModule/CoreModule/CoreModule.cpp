@@ -38,44 +38,33 @@ void playerMovement(bool leftKey, bool rightKey, Entity* player, int width)
 
 int main()
 {
-	/*char buffer[MAX_PATH];
+	char buffer[MAX_PATH];
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
 	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
 	std::string path = std::string(buffer).substr(0, pos);
 
 	std::string fontPath = path + "\\metalmania.ttf";
+	//std::cout << fontPath.c_str() << std::endl;
 
-	std::cout << fontPath.c_str() << std::endl;
+	//std::ifstream file(fontPath);
+	//std::cout << "Exists: " << file.good() << std::endl;
 
-	std::ifstream file(fontPath);
-	std::cout << "Exists: " << file.good() << std::endl;
+	sf::Font font;
+	if (!font.loadFromFile(fontPath));
 
-	std::string filename = "metalmania.ttf";
-
-	sf::FileInputStream f;
-	f.open(filename);*/
-
-	/*sf::Font font;
-	if (!font.loadFromFile(fontPath));*/
-
-	/*sf::Font font;
-	if (!font.loadFromStream(f))
+	sf::Texture backGroundTexture;
+	if (!backGroundTexture.loadFromFile("background.png"))
 	{
-	}*/
-
-	/*sf::Texture backGroundTexture;
-	if (!backGroundTexture.loadFromFile("3997687.png"))
-	{
-	}*/
+	}
 
 	sf::Clock clock;
 
 	int scoreNumber = 0;
 	sf::Text score;
 
-	//score.setFont(font);
+	score.setFont(font);
 	score.setFillColor(sf::Color::White);
-	score.setCharacterSize(15);
+	score.setCharacterSize(20.0f);
 
 	std::vector<Entity> enemies;
 
@@ -130,7 +119,7 @@ int main()
 		}
 		player.DrawEntity(&window, true);
 
-		score.setString(std::to_string(scoreNumber) + "Testing");
+		score.setString(std::to_string(scoreNumber));
 		window.draw(score);
 		window.display();
 	}

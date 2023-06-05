@@ -140,6 +140,13 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="RigidBody.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="KaBlam.ttf" />
+    <Font Include="metalmania.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="background.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

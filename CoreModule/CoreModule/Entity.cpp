@@ -43,7 +43,6 @@ void Entity::SpeedCalculation(bool player, float force, float mass, sf::Vector2f
 	}
 
 	player ? MoveSpeedX = velocity : moveSpeedY = velocity;
-	std::cout << velocity << std::endl;
 }
 
 void Entity::DrawEntity(sf::RenderWindow* window, bool player)
