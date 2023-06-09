@@ -1,6 +1,4 @@
 #include "Entity.h"
-#include <iostream>
-#include "Physics.h"
 
 Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color color, int h, int w, float m)
 {
@@ -10,6 +8,10 @@ Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color c
 	testShape.setPosition(positionX, positionY);
 
 	Mass = m;
+
+	Force = 5.0f;
+
+	position = CustomPhysics::Vector2f(positionX, positionY);
 
 	width = w;;
 	height = h;
@@ -23,52 +25,45 @@ Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color c
 void Entity::ChangeDirection()
 {
 	velocity = 0.0f;
-	testShape.setPosition(std::rand() % width, 0);
+	Force = 5.0f;
+	clock.restart().asSeconds();
+
+	CustomPhysics::Vector2f randomPos = CustomPhysics::Vector2f(std::rand() % width, std::rand() % -100);
+	position = randomPos;
+
+	testShape.setPosition(position.X, position.Y);
 }
 
-void Entity::SpeedCalculation(bool player, float force, float mass, sf::Vector2f previousPos, sf::Vector2f currentPos)
+void Entity::SpeedCalculation(float force, float mass)
 {
-	std::clock_t timer;
-	timer = clock();
-	float acceleration = player ? force / mass : 9.81;
-	velocity = velocity + (acceleration * timer);
+	float time = clock.getElapsedTime().asSeconds();
 
-	if (velocity >= 5)
+	if (Force != 0)
 	{
-		velocity = 5;
-	}
-	if (velocity < -5)
-	{
-		velocity = -5;
-	}
+		float acceleration = force / mass;
+		velocity = velocity + (acceleration * time);
 
-	player ? MoveSpeedX = velocity : moveSpeedY = velocity;
+		CustomPhysics::Physics<float>::Clamp(velocity, -7, 7);
+
+		moveSpeedY = velocity;
+	}
 }
 
-void Entity::DrawEntity(sf::RenderWindow* window, bool player)
+void Entity::DrawEntity(sf::RenderWindow* window)
 {
-	if (player)
-	{
-		SpeedCalculation(true, Force, Mass, previousPos, testShape.getPosition());
-		testShape.move(MoveSpeedX, 0);
-	}
-	else
-	{
-		SpeedCalculation(false, Force, Mass, previousPos, testShape.getPosition());
-		testShape.move(MoveSpeedX, moveSpeedY);
-	}
+	SpeedCalculation(Force, Mass);
 
-	if (!player)
+	position += CustomPhysics::Vector2f(MoveSpeedX, moveSpeedY);
+
+	testShape.setPosition(position.X, position.Y);
+
+	if (position.X >= width || position.X <= 0)
 	{
-		sf::Vector2f testShapePosition = testShape.getPosition();
-		if (testShapePosition.x >= width || testShapePosition.x <= 0)
-		{
-			MoveSpeedX *= -1;
-		}
-		if (testShapePosition.y > height || testShapePosition.y < 0)
-		{
-			testShape.setPosition(std::rand() & width, 0);
-		}
+		MoveSpeedX *= -1;
+	}
+	if (position.Y > height || position.Y < 0)
+	{
+		ChangeDirection();
 	}
 
 	window->draw(testShape);

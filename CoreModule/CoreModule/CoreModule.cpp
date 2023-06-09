@@ -3,89 +3,63 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include "Player.h"
+#include "Physics.h"
 
-double distance(sf::Vector2f first, sf::Vector2f second)
+void SetUpText(int characterSize, sf::Text& text, sf::Color color, int width, int height, bool score)
 {
-	double dy = (first.y - second.y);
-	double dx = (first.x - second.x);
-	double distance = sqrt(pow(dy, 2) + pow(dx, 2));
-	return distance;
-}
-
-bool circleCollision(sf::CircleShape first, sf::CircleShape second)
-{
-	double dis = distance(first.getPosition(), second.getPosition());
-	return dis <= (first.getRadius() + second.getRadius()) ? true : false;
-}
-
-void playerMovement(bool leftKey, bool rightKey, Entity* player, int width)
-{
-	sf::Vector2f pacman1Pos = player->testShape.getPosition();
-
-	if (leftKey && !rightKey && pacman1Pos.x > (width * 0.1))
-	{
-		player->Force = -5;
-	}
-	if (rightKey && !leftKey && pacman1Pos.x < (width * 0.9))
-	{
-		player->Force = 5;
-	}
-	if (!rightKey && !leftKey)
-	{
-		player->Force = 0;
-	}
+	text.setOrigin(text.getLocalBounds().width / 2.0f, text.getLocalBounds().height / 2.0f);
+	score ? text.setPosition(width * 0.05f, height * 0.095f) : text.setPosition(width / 2.0f, height / 2.0f);
+	text.setFillColor(sf::Color::White);
+	text.setCharacterSize(40.0f);
 }
 
 int main()
 {
+	int width = 1920;
+	int height = 1080;
+
 	char buffer[MAX_PATH];
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
 	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
 	std::string path = std::string(buffer).substr(0, pos);
 
 	std::string fontPath = path + "\\metalmania.ttf";
-	//std::cout << fontPath.c_str() << std::endl;
-
-	//std::ifstream file(fontPath);
-	//std::cout << "Exists: " << file.good() << std::endl;
 
 	sf::Font font;
 	if (!font.loadFromFile(fontPath));
 
-	sf::Texture backGroundTexture;
-	if (!backGroundTexture.loadFromFile("background.png"))
-	{
-	}
-
-	sf::Clock clock;
-
 	int scoreNumber = 0;
-	sf::Text score;
+	bool GameOver = false;
+	bool GameWon = false;
 
-	score.setFont(font);
-	score.setFillColor(sf::Color::White);
-	score.setCharacterSize(20.0f);
+	sf::Text score(std::to_string(scoreNumber), font);
+	SetUpText(40.0f, score, sf::Color::White, width, height, true);
+
+	sf::Text win("You Win!", font);
+	SetUpText(40.0f, win, sf::Color::White, width, height, false);
+
+	sf::Text gameOver("You Lose..", font);
+	SetUpText(40.0f, gameOver, sf::Color::White, width, height, false);
 
 	std::vector<Entity> enemies;
 
 	std::vector<sf::Color> colours = { sf::Color::White, sf::Color::Yellow, sf::Color::Blue, sf::Color::Green };
 
-	int width = 800;
-	int height = 600;
 	sf::RenderWindow window(sf::VideoMode(width, height), "Testing Game Window");
 
 	window.setFramerateLimit(60);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		sf::Color color = colours[std::rand() % colours.size()];
 
-		enemies.push_back(Entity(30.0f, 0.075f, std::rand() % width, std::rand() % -100, color, height, width, 20.0f));
+		float randomMass = std::rand() % 80;
+
+		enemies.push_back(Entity(30.0f, 0.075f, std::rand() % width, std::rand() % -100, color, height, width, randomMass));
 	}
 
-	Entity player = Entity(50.0f, 0.2f, 400.0f, 300.0f, sf::Color::Yellow, height, width, 50.0f);
-
-	bool leftKey, rightKey;
+	Player player = Player(50.0f, 0.2f, (width / 2.0f), (height * 0.75f), sf::Color::Yellow, height, width, 20.0f);
 
 	while (window.isOpen())
 	{
@@ -99,29 +73,45 @@ int main()
 		}
 		window.clear(sf::Color::Black);
 
-		/*double previousTime = clock.getElapsedTime().asMilliseconds();
-		float fps = 1 / (clock.getElapsedTime().asMilliseconds() - previousTime);
-		std::cout << fps << std::endl;*/
-
-		leftKey = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-		rightKey = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-		playerMovement(leftKey, rightKey, &player, width);
+		player.playerMovement();
 
 		for (int i = 0; i < enemies.size(); i++)
 		{
-			if (circleCollision(player.testShape, enemies[i].testShape))
+			if (CustomPhysics::Physics<sf::CircleShape>::circleCollision(player.testShape, player.position, enemies[i].testShape, enemies[i].position))
 			{
 				scoreNumber++;
 				enemies[i].ChangeDirection();
 			}
-
-			enemies[i].DrawEntity(&window, false);
+			if (enemies[i].position.Y >= height - 5.0f)
+			{
+				scoreNumber--;
+			}
+			enemies[i].DrawEntity(&window);
 		}
-		player.DrawEntity(&window, true);
 
+		player.DrawEntity(&window);
 		score.setString(std::to_string(scoreNumber));
+
+		if (scoreNumber >= 25.0f)
+		{
+			GameWon = true;
+			GameOver = false;
+		}
+		if (scoreNumber <= -25.0f)
+		{
+			GameOver = true;
+			GameWon = false;
+		}
+
 		window.draw(score);
+		if (GameWon)
+		{
+			window.draw(win);
+		}
+		if (GameOver)
+		{
+			window.draw(gameOver);
+		}
 		window.display();
 	}
 }
-

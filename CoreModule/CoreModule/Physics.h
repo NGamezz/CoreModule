@@ -1,13 +1,63 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Vector2.h"
 
-class Physics
+namespace CustomPhysics
 {
-private:
+	template <typename T>
+	class Physics
+	{
+	public:
+		bool static circleCollision(sf::CircleShape first, Vector2f firstPosition, sf::CircleShape second, Vector2f secondPosition);
+		double static distance(CustomPhysics::Vector2f first, CustomPhysics::Vector2f second);
 
-public:
-	void circleCollision(sf::CircleShape first, sf::CircleShape second);
-	void distance(sf::Vector2f a, sf::Vector2f b);
-};
+		T static Clamp(T& value, T min, T max);
+
+		T static Min(T a, T b);
+		T static Max(T a, T b);
+	};
+
+	template <typename T>
+	inline T Physics<T>::Min(T a, T b)
+	{
+		return a < b ? a : b;
+	}
+
+	template <typename T>
+	inline T Physics<T>::Max(T a, T b)
+	{
+		return a > b ? a : b;
+	}
+
+	template <typename T>
+	inline T Physics<T>::Clamp(T& value, T min, T max)
+	{
+		if (value >= max)
+		{
+			value = max;
+		}
+		if (value < min)
+		{
+			value = min;
+		}
+		return value;
+	}
+
+	template <typename T>
+	inline double Physics<T>::distance(Vector2f first, Vector2f second)
+	{
+		double dy = (first.Y - second.Y);
+		double dx = (first.X - second.X);
+		double distance = sqrt(pow(dy, 2) + pow(dx, 2));
+		return distance;
+	}
+
+	template <typename T>
+	inline bool Physics<T>::circleCollision(sf::CircleShape first, Vector2f firstPosition, sf::CircleShape second, Vector2f secondPosition)
+	{
+		double dis = distance(firstPosition, secondPosition);
+		return dis <= (first.getRadius() + second.getRadius());
+	}
+}
 
