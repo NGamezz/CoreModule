@@ -17,10 +17,9 @@ private:
 
 public:
 	bool right = false, left = false, zero = false;
-
+	sf::Sprite pacmanSprite;
 	CustomPhysics::Vector2f position;
 	sf::Clock clock;
-	sf::CircleShape testShape;
 	float Radius;
 	float Mass;
 	float Force = 0;
@@ -28,6 +27,6 @@ public:
 	void DrawEntity(sf::RenderWindow* window);
 	void SpeedCalculation();
 	void playerMovement();
-	Player(float rad, float speed, int positionX, int positionY, sf::Color, int h, int w, float mass);
+	Player(float rad, float speed, int positionX, int positionY, sf::Color, int h, int w, float mass, sf::Texture& pacmanTexture);
 };
 

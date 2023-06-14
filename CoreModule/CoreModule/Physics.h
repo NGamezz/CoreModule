@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Vector2.h"
 
 namespace CustomPhysics
@@ -9,7 +8,8 @@ namespace CustomPhysics
 	class Physics
 	{
 	public:
-		bool static circleCollision(sf::CircleShape first, Vector2f firstPosition, sf::CircleShape second, Vector2f secondPosition);
+		bool static circleCollision(float first, Vector2f firstPosition, float second, Vector2f secondPosition);
+		bool static boxCollision(float width, float height, Vector2f firstPosition, float width2, float height2, Vector2f secondPosition);
 		double static distance(CustomPhysics::Vector2f first, CustomPhysics::Vector2f second);
 
 		T static Clamp(T& value, T min, T max);
@@ -45,6 +45,22 @@ namespace CustomPhysics
 	}
 
 	template <typename T>
+	inline bool Physics<T>::boxCollision(float width, float height, Vector2f firstPosition, float width2, float height2, Vector2f secondPosition)
+	{
+		if (secondPosition.Y + (height2 / 2) > firstPosition.Y - (height / 2) && secondPosition.Y - (height2 / 2) < firstPosition.Y + (height / 2))
+		{
+			if (secondPosition.X + (width2 / 2) > firstPosition.X + (width / 2) && secondPosition.X - (width2 / 2) < firstPosition.X - (width / 2))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	template <typename T>
 	inline double Physics<T>::distance(Vector2f first, Vector2f second)
 	{
 		double dy = (first.Y - second.Y);
@@ -54,10 +70,10 @@ namespace CustomPhysics
 	}
 
 	template <typename T>
-	inline bool Physics<T>::circleCollision(sf::CircleShape first, Vector2f firstPosition, sf::CircleShape second, Vector2f secondPosition)
+	inline bool Physics<T>::circleCollision(float first, Vector2f firstPosition, float second, Vector2f secondPosition)
 	{
 		double dis = distance(firstPosition, secondPosition);
-		return dis <= (first.getRadius() + second.getRadius());
+		return dis <= (first + second);
 	}
 }
 

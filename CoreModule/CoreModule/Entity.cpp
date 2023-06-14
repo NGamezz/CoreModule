@@ -1,22 +1,23 @@
 #include "Entity.h"
 
-Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color color, int h, int w, float m)
+Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color color, int h, int w, float m, sf::Texture& spriteTexture)
 {
 	Radius = rad;
-	testShape = sf::CircleShape(Radius);
-	testShape.setFillColor(color);
-	testShape.setPosition(positionX, positionY);
 
 	Mass = m;
 
-	Force = 5.0f;
+	parachuteSprite.setTexture(spriteTexture);
+	parachuteSprite.setScale(0.5, 0.5);
+	parachuteSprite.setOrigin(parachuteSprite.getLocalBounds().width / 2, parachuteSprite.getLocalBounds().height / 2);
+	parachuteSprite.setPosition(positionX, positionY);
+
+	ForceY = 5.0f;
+	ForceX = rand() % (0 - 10);
 
 	position = CustomPhysics::Vector2f(positionX, positionY);
 
 	width = w;;
 	height = h;
-
-	testShape.setOrigin((Radius / 2), (Radius / 2));
 
 	MoveSpeedX = speed;
 	moveSpeedY = speed;
@@ -24,47 +25,64 @@ Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color c
 
 void Entity::ChangeDirection()
 {
-	velocity = 0.0f;
-	Force = 5.0f;
+	velocityY = 0.0f;
+	ForceY = 2.0f;
 	clock.restart().asSeconds();
+
+	ForceX = rand() % 5;
 
 	CustomPhysics::Vector2f randomPos = CustomPhysics::Vector2f(std::rand() % width, std::rand() % -100);
 	position = randomPos;
 
-	testShape.setPosition(position.X, position.Y);
+	parachuteSprite.setPosition(position.X, position.Y);
 }
 
-void Entity::SpeedCalculation(float force, float mass)
+void Entity::SpeedCalculation(float forceY, float forceX)
 {
 	float time = clock.getElapsedTime().asSeconds();
+	float dartelTime = dartelClock.getElapsedTime().asSeconds();
 
-	if (Force != 0)
+	if (dartelTime >= 2)
 	{
-		float acceleration = force / mass;
-		velocity = velocity + (acceleration * time);
+		dartelClock.restart();
+		ForceX *= -1;
+	}
 
-		CustomPhysics::Physics<float>::Clamp(velocity, -7, 7);
+	if (ForceY != 0 || ForceX != 0)
+	{
+		float accelerationY = forceY / Mass;
+		velocityY = velocityY + (accelerationY * time);
 
-		moveSpeedY = velocity;
+		CustomPhysics::Physics<float>::Clamp(velocityY, -4.0f, 4.0f);
+
+		moveSpeedY = velocityY;
+
+		float accelerationX = forceX / Mass;
+		velocityX = velocityX + (accelerationX * time);
+
+		CustomPhysics::Physics<float>::Clamp(velocityX, -3.0f, 3.0f);
+
+		MoveSpeedX = velocityX;
 	}
 }
 
 void Entity::DrawEntity(sf::RenderWindow* window)
 {
-	SpeedCalculation(Force, Mass);
+	SpeedCalculation(ForceY, ForceX);
 
 	position += CustomPhysics::Vector2f(MoveSpeedX, moveSpeedY);
 
-	testShape.setPosition(position.X, position.Y);
+	parachuteSprite.setPosition(position.X, position.Y);
 
-	if (position.X >= width || position.X <= 0)
+	if (position.X >= width * 0.85f && ForceX > 0 || position.X <= width * 0.15f && ForceX < 0)
 	{
-		MoveSpeedX *= -1;
+		ForceX *= -1;
 	}
+
 	if (position.Y > height || position.Y < 0)
 	{
 		ChangeDirection();
 	}
 
-	window->draw(testShape);
+	window->draw(parachuteSprite);
 }

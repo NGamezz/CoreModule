@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Vector2.h"
-#include <iostream>
 #include "Physics.h"
 
 class Entity
@@ -10,21 +9,23 @@ private:
 	float moveSpeedY;
 	int width, height;
 	bool hit = false;
-	float velocity = 0.0f;
+	float velocityY = 0.0f;
+	float velocityX = 0.0f;
+	sf::Clock dartelClock;
 
 public:
 	bool right = false, left = false, zero = false;
-
+	sf::Sprite parachuteSprite;
 	sf::Clock clock;
-	sf::CircleShape testShape;
 	float Radius;
 	CustomPhysics::Vector2f position;
 	float Mass;
-	float Force = 0;
+	float ForceY = 0;
+	float ForceX = 0;
 	float MoveSpeedX;
-	Entity(float rad, float speed, int positionX, int positionY, sf::Color, int h, int w, float mass);
+	Entity(float rad, float speed, int positionX, int positionY, sf::Color, int h, int w, float mass, sf::Texture& spriteTexture);
 	void DrawEntity(sf::RenderWindow* window);
 	void ChangeDirection();
-	void SpeedCalculation(float force, float mass);
+	void SpeedCalculation(float forceY, float forceX);
 };
 

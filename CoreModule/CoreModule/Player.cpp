@@ -1,22 +1,25 @@
 #include "Player.h"
 
-Player::Player(float rad, float speed, int positionX, int positionY, sf::Color color, int h, int w, float m)
+Player::Player(float rad, float speed, int positionX, int positionY, sf::Color color, int h, int w, float m, sf::Texture& pacmanTexture)
 {
 	Radius = rad;
-	testShape = sf::CircleShape(Radius);
-	testShape.setFillColor(color);
-	testShape.setPosition(positionX, positionY);
 
 	Mass = m;
+
+	pacmanSprite.setTexture(pacmanTexture);
+	pacmanSprite.setOrigin((pacmanSprite.getLocalBounds().width / 2), (pacmanSprite.getLocalBounds().height / 2));
+	pacmanSprite.setPosition(positionX, positionY);
+	pacmanSprite.setScale(0.9f, 0.9f);
 
 	position = CustomPhysics::Vector2f(positionX, positionY);
 
 	Force = 5.0f;
 
+	leftKey = false;
+	rightKey = false;
+
 	width = w;;
 	height = h;
-
-	testShape.setOrigin((Radius / 2.0f), (Radius / 2.0f));
 
 	MoveSpeedX = speed;
 	moveSpeedY = speed;
@@ -70,7 +73,7 @@ void Player::SpeedCalculation()
 		velocity = 0.0f;
 
 		position.X = (position.X <= (width * 0.05f)) ? (width * 0.05f) + 2.0f : (width * 0.95f) - 2.0f;
-		testShape.setPosition(position.X, position.X);
+		pacmanSprite.setPosition(position.X, position.Y);
 
 		return;
 	}
@@ -112,6 +115,7 @@ void Player::DrawEntity(sf::RenderWindow* window)
 
 	position += CustomPhysics::Vector2f(MoveSpeedX, 0.0f);
 
-	testShape.setPosition(position.X, position.Y);
-	window->draw(testShape);
+	pacmanSprite.setPosition(position.X, position.Y);
+
+	window->draw(pacmanSprite);
 }

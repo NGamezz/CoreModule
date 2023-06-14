@@ -1,10 +1,26 @@
-﻿  CoreModule.cpp
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(14,24): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(37,12): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(40,12): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(43,12): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(57,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(62,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(62,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(30,35): warning C4390: ';': empty controlled statement found; is this the intent?
+﻿  Entity.cpp
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(12,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(12,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(15,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(17,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(17,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(32,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(34,95): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(34,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   CoreModule.vcxproj -> S:\GitFork\CoreModule\CoreModule\x64\Debug\CoreModule.exe

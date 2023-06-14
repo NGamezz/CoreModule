@@ -26,6 +26,18 @@ int main()
 
 	std::string fontPath = path + "\\metalmania.ttf";
 
+	sf::Texture parachuteSprite;
+	if (!parachuteSprite.loadFromFile(path + "\\Illustration.png"));
+
+	sf::Texture pacmanTexture;
+	if (!pacmanTexture.loadFromFile(path + "\\pacman.png"));
+
+	sf::Texture backGroundTexture;
+	sf::Sprite backGroundSprite;
+	if (!backGroundTexture.loadFromFile(path + "\\background.png"));
+	backGroundSprite.setTexture(backGroundTexture);
+	backGroundSprite.setScale(width / backGroundSprite.getLocalBounds().width, height / backGroundSprite.getLocalBounds().height);
+
 	sf::Font font;
 	if (!font.loadFromFile(fontPath));
 
@@ -56,10 +68,10 @@ int main()
 
 		float randomMass = std::rand() % 80;
 
-		enemies.push_back(Entity(30.0f, 0.075f, std::rand() % width, std::rand() % -100, color, height, width, randomMass));
+		enemies.push_back(Entity(80.0f, 0.075f, std::rand() % width, std::rand() % -100, color, height, width, randomMass, parachuteSprite));
 	}
 
-	Player player = Player(50.0f, 0.2f, (width / 2.0f), (height * 0.75f), sf::Color::Yellow, height, width, 20.0f);
+	Player player = Player(50.0f, 0.2f, (width / 2.0f), (height * 0.75f), sf::Color::Yellow, height, width, 20.0f, pacmanTexture);
 
 	while (window.isOpen())
 	{
@@ -71,13 +83,18 @@ int main()
 				window.close();
 			}
 		}
-		window.clear(sf::Color::Black);
+		window.draw(backGroundSprite);
 
 		player.playerMovement();
 
 		for (int i = 0; i < enemies.size(); i++)
 		{
-			if (CustomPhysics::Physics<sf::CircleShape>::circleCollision(player.testShape, player.position, enemies[i].testShape, enemies[i].position))
+			if (GameWon || GameOver)
+			{
+				break;
+			}
+
+			if (CustomPhysics::Physics<float>::circleCollision(player.Radius, player.position, enemies[i].Radius, enemies[i].position))
 			{
 				scoreNumber++;
 				enemies[i].ChangeDirection();
