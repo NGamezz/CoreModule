@@ -54,12 +54,10 @@ int main()
 	sf::Text gameOver("You Lose..", font);
 	SetUpText(40.0f, gameOver, sf::Color::White, width, height, false);
 
+	sf::RenderWindow window(sf::VideoMode(width, height), "Testing Game Window");
+	window.setFramerateLimit(60);
 
 	std::vector<Entity> enemies;
-
-	sf::RenderWindow window(sf::VideoMode(width, height), "Testing Game Window");
-
-	window.setFramerateLimit(60);
 
 	for (int i = 0; i < 2; i++)
 	{

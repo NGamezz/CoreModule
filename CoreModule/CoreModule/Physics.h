@@ -9,7 +9,6 @@ namespace CustomPhysics
 	{
 	public:
 		bool static circleCollision(float first, Vector2f firstPosition, float second, Vector2f secondPosition);
-		bool static boxCollision(float width, float height, Vector2f firstPosition, float width2, float height2, Vector2f secondPosition);
 		double static distance(CustomPhysics::Vector2f first, CustomPhysics::Vector2f second);
 
 		T static Clamp(T& value, T min, T max);
@@ -42,22 +41,6 @@ namespace CustomPhysics
 			value = min;
 		}
 		return value;
-	}
-
-	template <typename T>
-	inline bool Physics<T>::boxCollision(float width, float height, Vector2f firstPosition, float width2, float height2, Vector2f secondPosition)
-	{
-		if (secondPosition.Y + (height2 / 2) > firstPosition.Y - (height / 2) && secondPosition.Y - (height2 / 2) < firstPosition.Y + (height / 2))
-		{
-			if (secondPosition.X + (width2 / 2) > firstPosition.X + (width / 2) && secondPosition.X - (width2 / 2) < firstPosition.X - (width / 2))
-			{
-				return true;
-			}
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	template <typename T>

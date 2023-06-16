@@ -1,4 +1,16 @@
-﻿  Player.cpp
+﻿  CoreModule.cpp
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(14,24): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(49,12): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(52,12): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(55,12): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(66,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(71,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(71,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(34,65): warning C4390: ';': empty controlled statement found; is this the intent?
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(37,57): warning C4390: ';': empty controlled statement found; is this the intent?
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(41,65): warning C4390: ';': empty controlled statement found; is this the intent?
+S:\GitFork\CoreModule\CoreModule\CoreModule\CoreModule.cpp(46,35): warning C4390: ';': empty controlled statement found; is this the intent?
+  Player.cpp
 S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(11,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(11,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(14,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
@@ -11,4 +23,5 @@ S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(14,37): warning C4244: 'a
           [
               T=float
           ]
+  Generating Code...
   CoreModule.vcxproj -> S:\GitFork\CoreModule\CoreModule\x64\Debug\CoreModule.exe
