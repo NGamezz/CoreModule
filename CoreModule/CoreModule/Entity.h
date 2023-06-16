@@ -23,7 +23,7 @@ public:
 	float ForceY = 0;
 	float ForceX = 0;
 	float MoveSpeedX;
-	Entity(float rad, float speed, int positionX, int positionY, sf::Color, int h, int w, float mass, sf::Texture& spriteTexture);
+	Entity(float rad, float speed, int positionX, int positionY, int h, int w, float mass, sf::Texture& spriteTexture);
 	void DrawEntity(sf::RenderWindow* window);
 	void ChangeDirection();
 	void SpeedCalculation(float forceY, float forceX);

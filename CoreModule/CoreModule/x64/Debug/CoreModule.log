@@ -1,24 +1,12 @@
-﻿  Entity.cpp
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(12,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(12,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(15,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(17,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+﻿  Player.cpp
+S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(11,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(11,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(14,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(17,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(32,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(34,95): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-S:\GitFork\CoreModule\CoreModule\CoreModule\Entity.cpp(34,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+S:\GitFork\CoreModule\CoreModule\CoreModule\Player.cpp(14,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float

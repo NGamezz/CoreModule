@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(float rad, float speed, int positionX, int positionY, sf::Color color, int h, int w, float m, sf::Texture& spriteTexture)
+Entity::Entity(float rad, float speed, int positionX, int positionY, int h, int w, float m, sf::Texture& spriteTexture)
 {
 	Radius = rad;
 
@@ -48,7 +48,7 @@ void Entity::SpeedCalculation(float forceY, float forceX)
 		ForceX *= -1;
 	}
 
-	if (ForceY != 0 || ForceX != 0)
+	if (ForceY != 0)
 	{
 		float accelerationY = forceY / Mass;
 		velocityY = velocityY + (accelerationY * time);
@@ -56,7 +56,10 @@ void Entity::SpeedCalculation(float forceY, float forceX)
 		CustomPhysics::Physics<float>::Clamp(velocityY, -4.0f, 4.0f);
 
 		moveSpeedY = velocityY;
+	}
 
+	if (ForceX != 0)
+	{
 		float accelerationX = forceX / Mass;
 		velocityX = velocityX + (accelerationX * time);
 
@@ -74,14 +77,17 @@ void Entity::DrawEntity(sf::RenderWindow* window)
 
 	parachuteSprite.setPosition(position.X, position.Y);
 
+	//Soft Boundary
 	if (position.X >= width * 0.85f && ForceX > 0 || position.X <= width * 0.15f && ForceX < 0)
 	{
 		ForceX *= -1;
 	}
 
-	if (position.Y > height || position.Y < 0)
+	//Hard Boundary
+	if (position.X < width * 0.01f || position.X > width * 0.99f)
 	{
-		ChangeDirection();
+		position.X = (position.X <= (width * 0.01f)) ? (width * 0.01f) + 0.01f : (width * 0.99f) - 0.01f;
+		parachuteSprite.setPosition(position.X, position.Y);
 	}
 
 	window->draw(parachuteSprite);

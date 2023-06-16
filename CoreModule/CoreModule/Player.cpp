@@ -27,8 +27,8 @@ Player::Player(float rad, float speed, int positionX, int positionY, sf::Color c
 
 void Player::playerMovement()
 {
-	leftKey = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-	rightKey = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+	leftKey = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+	rightKey = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 
 	if (leftKey && !rightKey && position.X > (width * 0.05f))
 	{
@@ -72,7 +72,7 @@ void Player::SpeedCalculation()
 		MoveSpeedX = 0.0f;
 		velocity = 0.0f;
 
-		position.X = (position.X <= (width * 0.05f)) ? (width * 0.05f) + 2.0f : (width * 0.95f) - 2.0f;
+		position.X = (position.X <= (width * 0.05f)) ? (width * 0.05f) + 0.01f : (width * 0.95f) - 0.01f;
 		pacmanSprite.setPosition(position.X, position.Y);
 
 		return;

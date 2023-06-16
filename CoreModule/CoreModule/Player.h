@@ -12,7 +12,7 @@ private:
 	bool hit = false;
 	float velocity = 0.0f;
 	bool leftKey, rightKey;
-	float time;
+	float time = 0.0f;
 	float deceleration = 0.05f;
 
 public:

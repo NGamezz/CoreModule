@@ -19,6 +19,10 @@ int main()
 	int width = 1920;
 	int height = 1080;
 
+	int scoreNumber = 0;
+	bool GameOver = false;
+	bool GameWon = false;
+
 	char buffer[MAX_PATH];
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
 	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
@@ -41,12 +45,8 @@ int main()
 	sf::Font font;
 	if (!font.loadFromFile(fontPath));
 
-	int scoreNumber = 0;
-	bool GameOver = false;
-	bool GameWon = false;
-
-	sf::Text score(std::to_string(scoreNumber), font);
-	SetUpText(40.0f, score, sf::Color::White, width, height, true);
+	sf::Text scoreText(std::to_string(scoreNumber), font);
+	SetUpText(40.0f, scoreText, sf::Color::White, width, height, true);
 
 	sf::Text win("You Win!", font);
 	SetUpText(40.0f, win, sf::Color::White, width, height, false);
@@ -54,21 +54,18 @@ int main()
 	sf::Text gameOver("You Lose..", font);
 	SetUpText(40.0f, gameOver, sf::Color::White, width, height, false);
 
-	std::vector<Entity> enemies;
 
-	std::vector<sf::Color> colours = { sf::Color::White, sf::Color::Yellow, sf::Color::Blue, sf::Color::Green };
+	std::vector<Entity> enemies;
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Testing Game Window");
 
 	window.setFramerateLimit(60);
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		sf::Color color = colours[std::rand() % colours.size()];
-
 		float randomMass = std::rand() % 80;
 
-		enemies.push_back(Entity(80.0f, 0.075f, std::rand() % width, std::rand() % -100, color, height, width, randomMass, parachuteSprite));
+		enemies.push_back(Entity(80.0f, 0.075f, std::rand() % width, std::rand() % -100, height, width, randomMass, parachuteSprite));
 	}
 
 	Player player = Player(50.0f, 0.2f, (width / 2.0f), (height * 0.75f), sf::Color::Yellow, height, width, 20.0f, pacmanTexture);
@@ -99,15 +96,16 @@ int main()
 				scoreNumber++;
 				enemies[i].ChangeDirection();
 			}
-			if (enemies[i].position.Y >= height - 5.0f)
+			if (enemies[i].position.Y > height || enemies[i].position.Y < 0)
 			{
 				scoreNumber--;
+				enemies[i].ChangeDirection();
 			}
 			enemies[i].DrawEntity(&window);
 		}
 
 		player.DrawEntity(&window);
-		score.setString(std::to_string(scoreNumber));
+		scoreText.setString(std::to_string(scoreNumber));
 
 		if (scoreNumber >= 25.0f)
 		{
@@ -120,7 +118,7 @@ int main()
 			GameWon = false;
 		}
 
-		window.draw(score);
+		window.draw(scoreText);
 		if (GameWon)
 		{
 			window.draw(win);
